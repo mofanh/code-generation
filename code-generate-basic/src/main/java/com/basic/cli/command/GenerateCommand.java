@@ -3,13 +3,13 @@ package com.basic.cli.command;
 import cn.hutool.core.bean.BeanUtil;
 import com.basic.generator.MainGenerator;
 import com.basic.model.MainTemplateConfig;
-import freemarker.template.TemplateException;
+import lombok.Data;
 import picocli.CommandLine;
 
-import java.io.IOException;
 import java.util.concurrent.Callable;
 
 @CommandLine.Command(name = "generate", description = "生成代码", mixinStandardHelpOptions = true)
+@Data
 public class GenerateCommand implements Callable {
     /*
      * 1. 在代码开头增加作者
@@ -27,6 +27,7 @@ public class GenerateCommand implements Callable {
     public Object call() throws Exception {
         MainTemplateConfig mainTemplateConfig = new MainTemplateConfig();
         BeanUtil.copyProperties(this, mainTemplateConfig);
+        System.out.println(author + ":" + outputText + ":" + loop);
         MainGenerator.doGenerate(mainTemplateConfig);
         return 0;
     }
